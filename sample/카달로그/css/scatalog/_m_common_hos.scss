@@ -1,0 +1,454 @@
+#scatalog_2512 {
+  &:has(.hos_cont_wrap) {
+    padding-bottom: 0;
+  }
+
+  .hos_cont_wrap {
+    /* s : banner */
+    .hos_banner_wrap {
+      width: 100%;
+
+      .img_box {
+        width: 100%;
+        aspect-ratio: 360/500;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+    /* e : banner */
+
+    /* s : 앵커탭 */
+    .anchor_list_box {
+      position: sticky;
+      top: 60px;
+      z-index: 10;
+      overflow: hidden;
+      background: #000;
+
+      .tab_swiper_wrap {
+        padding: 0;
+        margin: 0;
+        .swiper-wrapper {
+          height: 55px;
+
+          .swiper-slide {
+            position: relative;
+            width: auto;
+
+            a {
+              display: inline-flex;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+              height: 100%;
+              padding: 18px 12px;
+              box-sizing: border-box;
+              text-align: center;
+              background: #000;
+
+              .text {
+                font-family: 'Pretendard', sans-serif;
+                display: inline-block;
+                color: rgba(255, 255, 255, 0.5);
+                font-size: 14px;
+                line-height: 19px;
+                font-weight: 500;
+                letter-spacing: -0.025em;
+                vertical-align: top;
+              }
+            }
+
+            &.on {
+              &:before {
+                content: '';
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                height: 2px;
+                background: #fff;
+              }
+
+              .text {
+                color: #fff;
+                font-weight: 600;
+              }
+            }
+          }
+        }
+      }
+    }
+    /* e : 앵커탭 */
+
+    .hos_cont_box {
+      position: relative;
+      padding: 80px 0 60px;
+      overflow: hidden;
+      scroll-margin-top: calc((env(safe-area-inset-top)) + 80px);
+
+      .intersect_observer{
+        position:absolute;
+        top:0;
+        left:0;
+        width: 1px;
+        height: 1px;
+        pointer-events:none;
+        transform:none !important;
+        opacity:0 !important;
+      }
+
+      .bg_box {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+
+        img {
+          display: block;
+          min-width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .sc_cont_box_zero {
+        ~ .sc_cont_box_xl {
+          padding-top: 70px;
+        }
+      }
+
+      .sc_cont_box_2xl {
+        ~.sc_cont_box_xl {
+          padding-top: 125px;
+        }
+      }
+
+      .sc_scont_box {
+        padding-top: 30px;
+      }
+
+      .sc_stext_white {
+        + .sc_stext_white {
+          margin-top: 16px;
+        }
+      }
+
+      .ta_right {
+        text-align: right;
+      }
+
+      .title_box {
+        width: 100%;
+        margin-bottom: 20px;
+        .location_area {
+          font-size: 0;
+          .ico_location {
+            display: inline-block;
+            margin: 2px 3px 0 2px;
+            width: 14px;
+            height: 14px;
+            background: url('/resources/site/img/scatalog_2512/common/comm_ico_location.svg') center no-repeat;
+            vertical-align: top;
+          }
+          .text {
+            display: inline-block;
+            font-family: 'Sinsegae', sans-serif;
+            font-size: 13px;
+            line-height: 18px;
+            font-weight: 500;
+            letter-spacing: -0.015em;
+            color: #fff;
+            opacity: 0.8;
+            vertical-align: top;
+          }
+        }
+
+        .logo_area {
+          width: 100%;
+          margin-top: 6px;
+          img {
+            display: block;
+            width: 100%;
+          }
+        }
+
+        + .desc_box {
+          margin-top: 30px;
+        }
+      }
+
+      .img_box {
+        img {
+          display: block;
+          min-width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .img_box {
+        + .desc_box {
+          margin-top: 40px;
+        }
+      }
+
+      .desc_box {
+        display: flex;
+        flex-direction: column;
+        font-family: 'Pretendard', sans-serif;
+
+        .sc_stext_white {
+          font-family: 'Pretendard', sans-serif;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 1.48em;
+          letter-spacing: -0.015em;
+          color: #fff;
+        }
+
+        [class^="sc_stext"] {
+          word-break: keep-all;
+        }
+      }
+
+      .swiper_prod_wrap {
+        overflow: hidden;
+        margin: 0 -18px;
+        padding: 0 18px;
+      }
+
+      .prod_list_wrap {
+        overflow: hidden;
+
+        .swiper_dot_prod_wrap {
+          .grid_col3_list {
+            .grid_item {
+              [class^='thumb_prod_'] {
+                .info_box {
+                  padding-left: 0;
+                }
+              }
+            }
+          }
+        }
+
+        .swiper-control-box {
+          margin-top: 30px;
+
+          .swiper-pagination {
+            position: static;
+            display: flex;
+            justify-content: center;
+            column-gap: 6px;
+
+            .swiper-pagination-bullet {
+              width: 6px;
+              height: 6px;
+              margin: 0;
+              background: #fff;
+              opacity: .2;
+
+              &.swiper-pagination-bullet-active {
+                background: #fff;
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+
+      .thumb_prod_md .info_box {
+        .prod_name {
+          color: rgba(255, 255, 255, .9);
+        }
+
+        .prod_price {
+          color: #fff;
+        }
+      }
+
+      /* GIFT */
+      &.gift {
+        .img_box {
+          .img_inner {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            transition-timing-function: ease-in;
+          }
+
+          .dot_text {
+            margin-top: 10px;
+            color: #fff;
+            opacity: .6;
+
+            &::before {
+              background-color: #fff;
+            }
+          }
+        }
+      }
+
+      /* DESSERT SALON */
+      &.dessert {
+        .img_box {
+          .img_inner {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            transition-timing-function: ease-in;
+          }
+
+          .dot_text {
+            margin-top: 10px;
+          }
+        }
+      }
+
+      /* FOOD HALL */
+      &.food {
+        padding-top: 0;
+
+        .sc_cont_box_2xl {
+          position: relative;
+          padding-bottom: 233px;
+
+          .img_box {
+            margin: 0 -18px;
+
+            .img_inner {
+              height: 490px;
+            }
+
+            &.float {
+              position: absolute;
+              right: 0;
+              bottom: -85px;
+              width: 286px;
+              height: 278px;
+              margin: 0;
+              border-top-left-radius: 12px;
+              border-bottom-left-radius: 12px;
+              overflow: hidden;
+
+              .img_inner {
+                height: 100%;
+              }
+            }
+          }
+
+          .desc_box {
+            + .img_box {
+              margin-top: 40px;
+            }
+          }
+
+          &.bg_dark_gray {
+            background-color: #121212;
+
+            .desc_box:has(.sc_stext_white_lg) {
+              margin-top: 60px;
+              padding-left: 61px;
+            }
+
+            ~ .sc_cont_box_xl {
+              .swiper_prod_wrap {
+                margin-top: 40px;
+                .thumb_prod_md {
+                  .info_box {
+                    .prod_name, .prod_price {
+                      color: #000;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .sc_cont_box_xl {
+          .desc_box {
+            .sc_stext_lg {
+              opacity: .9;
+            }
+          }
+        }
+
+        .sc_stext_white_lg {
+          font-size: 15px;
+          color: #B6B6B6;
+
+          .fw_sb {
+            color: #fff;
+          }
+        }
+
+      }
+
+      /* WINE CELLAR */
+      &.wine {
+        .img_box {
+          margin: 0 -18px;
+          .img_inner {
+            height: 390px;
+          }
+        }
+
+        .sc_cont_box_xl {
+          margin-top: 60px;
+          padding-top: 0;
+
+          .sc_scont_box:first-child {
+            padding-top: 60px;
+            border-top: 0.5px solid rgba(255, 255, 255, .3);
+          }
+
+          .sc_ctitle_wrap_zero {
+            margin-bottom: 16px;
+
+            .sc_ctitle_md {
+              font-weight: 700;
+              color: #fff;
+            }
+            .sc_stext_sm {
+              margin-top: 3px;
+              color: #fff;
+              opacity: .7;
+            }
+          }
+        }
+      }
+      /* TWELVE */
+      &.twelve {
+        .img_box {
+          margin: 0 -18px;
+          .img_inner {
+            height: 390px;
+          }
+        }
+        .sc_cont_box_zero {
+          .desc_box {
+            .sc_stext_white {
+              + .sc_stext_white_lg {
+                margin-top: 40px;
+                font-weight: 400;
+                opacity: .9;
+              }
+            }
+          }
+          ~ .sc_cont_box_xl {
+            padding-top: 60px;
+          }
+        }
+      }
+    }
+  }
+}

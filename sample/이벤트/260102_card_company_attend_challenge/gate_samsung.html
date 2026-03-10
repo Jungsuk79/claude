@@ -1,0 +1,70 @@
+<style>
+    html:not(:has(#pinch-zoom-container)) body {
+        padding: 0;
+        margin: 0;
+    }
+
+    #pinch-zoom-container .event-content {
+        margin: 0 -18px;
+    }
+
+    .event-content img {
+        width: 100%;
+        vertical-align: top;
+    }
+
+    .event-content [class^="event-item"] {
+        position: relative;
+        width: 100%;
+    }
+
+    .event-content .btn-event {
+        position: absolute;
+        left: 5vw;
+        right: 5vw;
+        top: 0;
+        height: 15.444vw;
+        cursor: pointer;
+        opacity: 0;
+        border: none;
+        font-size: 0;
+    }
+
+    .event-content button {
+        flex: 0 0 auto;
+        margin: 0;
+        padding: 0;
+        background: none;
+        border: none;
+    }
+</style>
+
+<div class="event-content">
+    <div class="event-item-01">
+        <img src="https://appdept.shinsegae.com/contents/event/260102_card_company_attend_challenge/samsung_attend_challenge_bg_01.webp" alt="">
+    </div>
+    <div class="event-item-02">
+        <img src="https://appdept.shinsegae.com/contents/event/251001_card_company_attend_challenge/attend_challenge_bg_04_new.webp" alt="">
+    </div>
+    <div class="event-item-03">
+        <img src="https://appdept.shinsegae.com/contents/event/251001_card_company_attend_challenge/attend_challenge_bg_05_new.webp" alt="">
+        <button type="button" class="btn-event" onclick="$$unifiedMoveTo({ screenId: 'ESP0010', conditions: { login: true }});">비욘드신세계 바로가기</button>
+    </div>
+    <div class="event-item-04">
+        <img src="https://appdept.shinsegae.com/contents/event/260102_card_company_attend_challenge/samsung_attend_challenge_bg_02.webp" alt="">
+    </div>
+    <div class="event-item-05">
+        <img src="https://appdept.shinsegae.com/contents/event/251001_card_company_attend_challenge/attend_challenge_bg_03_new.webp" alt="">
+        <button type="button" class="btn-event" onclick="$$unifiedMoveTo({ screenId: 'EVT_DAILY_SAMSUNG_202601', screenDetail: 'path[]=$CURRENT_EVENT_CODE', conditions: { login: true, members: true }});">출석체크하러 가기</button>
+    </div>
+    <div class="event-item-06">
+        <img src="https://appdept.shinsegae.com/contents/event/251001_card_company_attend_challenge/attend_challenge_bg_01_new.webp" alt="">
+    </div>
+    <div class="event-item-07">
+        <img src="https://appdept.shinsegae.com/contents/event/251001_card_company_attend_challenge/attend_challenge_bg_02_new.webp" alt="">
+        <button type="button" class="btn-event" onclick="$$unifiedMoveTo({ screenId : 'TRV0001', conditions: { login: true }});">비아신세계 바로가기</button>
+    </div>
+    <div class="event-item-08">
+        <img src="https://appdept.shinsegae.com/contents/event/251001_card_company_attend_challenge/attend_challenge_bg_06_new.webp" alt="">
+    </div>
+</div>

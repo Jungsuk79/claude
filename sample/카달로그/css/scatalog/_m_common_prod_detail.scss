@@ -1,0 +1,299 @@
+#scatalog_2512 {
+  .prod_detail_wrap {
+    .prod_detail_header {
+      .thumb_box {
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        padding-top: 100%;
+        background-color: #FAFAFA;
+        box-sizing: border-box;
+
+        img {
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 100%;
+          -o-object-fit: cover;
+          object-fit: cover;
+        }
+
+        .prod_notice_info {
+          position: absolute;
+          bottom: 20px;
+          width: 100%;
+          text-align: center;
+
+          .text {
+            padding-left: 22px;
+            background: url('/resources/site/img/scatalog_2512/prod_detail/ico_notice.png') left center / 16px no-repeat;
+            font-family: 'Pretendard', sans-serif;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 1.4;
+            letter-spacing: -0.015em;
+            color: #999;
+          }
+        }
+      }
+
+      .info_box {
+        padding: 20px 18px 40px;
+
+        .sc_scont_line_box {
+          padding-bottom: 20px;
+          border-bottom: 1px solid #eee;
+
+          .prod_tit_wrap {
+            .prod_code {
+              display: inline-block;
+              margin-bottom: 4px;
+
+              > span {
+                font-family: "Sinsegae", sans-serif;
+                font-weight: 500;
+                font-size: 12px;
+                line-height: 18px;
+                color: #666;
+                vertical-align: top;
+
+                &.text {
+                  letter-spacing: -0.015em;
+                }
+                &.num {
+                  letter-spacing: -0.025em;
+                  margin-left: 2px;
+                }
+              }
+            }
+
+            .prod_name {
+              font-family: 'Pretendard', sans-serif;
+              font-weight: 500;
+              font-size: 18px;
+              line-height: 1.4;
+              letter-spacing: -0.015em;
+              color: #000;
+            }
+
+            .prod_price {
+              display: flex;
+              align-items: flex-end;
+              margin-top: 8px;
+              font-family: 'pretendard', sans-serif;
+              color: #000;
+
+              .val {
+                font-family: inherit;
+                font-weight: 600;
+                font-size: 20px;
+                line-height: 1.4;
+                letter-spacing: -0.02em;
+                color: inherit;
+              }
+
+              .unit {
+                margin-left: 1px;
+                font-family: inherit;
+                font-weight: 500;
+                font-size: 14px;
+                line-height: 26px;
+                letter-spacing: -0.02em;
+                color: inherit;
+              }
+            }
+
+            ~ .sc_stext_md {
+              margin-top: 30px;
+            }
+          }
+
+          .sc_stext_md {
+            color: #333;
+          }
+
+          .tbl_info_wrap {
+            padding: 0;
+            border: 0;
+          }
+
+          &:not(:first-child) {
+            margin-top: 20px;
+          }
+        }
+      }
+    }
+
+    .prod_detail_body {
+      .related_prod_list_wrap {
+        position: relative;
+        overflow: hidden;
+        margin: 0 -18px;
+        padding: 0 18px;
+
+        .swiper-control-box {
+          margin-top: 30px;
+
+          .swiper-pagination {
+            position: static;
+            display: flex;
+            justify-content: center;
+            column-gap: 6px;
+
+            .swiper-pagination-bullet {
+              display: inline-block;
+              width: 6px;
+              height: 6px;
+              background-color: #000;
+              opacity: .1;
+              margin: 0;
+
+              &.swiper-pagination-bullet-active {
+                opacity: 1;
+              }
+            }
+          }
+        }
+      }
+
+      .sc_cont_box_xl {
+        .grid_col2_list {
+          .grid_item {
+            .thumb_prod_md {
+              .info_box {
+                padding: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* share popup */
+  .layer_share {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    opacity: 0;
+    z-index: -5;
+
+    button {
+      background: inherit;
+      border:none;
+      box-shadow:none;
+      border-radius:0;
+      padding:0;
+      overflow: visible;
+      cursor: pointer;
+    }
+
+    .dim {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      background-color: rgba(0,0,0,0.5);
+      margin-top: 0;
+    }
+
+
+    .dialog_content {
+      overflow: hidden;
+      width: 100%;
+      max-height: calc(100vh - 15%);
+      overscroll-behavior: none;
+      left: 0;
+      bottom: -100%;
+      right: 0;
+      background: #ffffff;
+      box-sizing: border-box;
+      position: absolute;
+      z-index: 3;
+
+      .dialog_header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 30px 18px 0;
+
+        .dialog_title {
+          font-family: "Pretendard", sans-serif;
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 24px;
+          letter-spacing: -0.015em;
+          color: #000;
+        }
+
+        .dialog_close {
+          font-size: 0;
+          width: 24px;
+          height: 24px;
+          border: none;
+          background: url(/resources/site/img/scatalog_2512/common/comm_ico_close.svg) center / cover no-repeat;
+        }
+      }
+
+      .dialog_body {
+        margin: 30px 0 50px;
+
+        .dialog_inner {
+          padding: 0 18px;
+
+          .sns_share_list {
+            display: flex;
+            column-gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0 17px;
+
+            .sns_share_item {
+              flex: 1;
+
+              .btn_sns_share {
+                display: flex;
+                align-items: center;
+                width: 100%;
+
+                [class^='ico_share_']{
+                  flex-shrink: 0;
+                  display: inline-block;
+                  margin-right: 11px;
+                  width: 50px;
+                  height: 50px;
+                  vertical-align: top;
+                }
+
+                .ico_share_kakao {
+                  background: url('/resources/site/img/scatalog_2512/prod_detail/ico_share_kakao.png') center / cover no-repeat;
+                }
+
+                .ico_share_url {
+                  background: url('/resources/site/img/scatalog_2512/prod_detail/ico_share_url.png') center / cover no-repeat;
+                }
+
+                .text {
+                  display: inline-block;
+                  font-family: 'Pretendard', sans-serif;
+                  font-weight: 500;
+                  font-size: 14px;
+                  line-height: 1.4;
+                  letter-spacing: -0.015em;
+                  color: #000;
+                  white-space: nowrap;
+                  vertical-align: top;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

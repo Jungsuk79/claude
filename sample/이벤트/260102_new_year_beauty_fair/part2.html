@@ -1,0 +1,1087 @@
+<style>
+    html:not(:has(#pinch-zoom-container)) body {
+        padding: 0;
+        margin: 0;
+    }
+
+    #pinch-zoom-container .event-content {
+        margin: 0 -18px;
+    }
+
+    .event-content img {
+        width: 100%;
+        vertical-align: top;
+    }
+
+    .event-content li {
+        list-style: none;
+        font-size: 0;
+    }
+
+    .event-content [class^="event-item"] {
+        position: relative;
+    }
+
+    .event-content button {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background: none;
+        border: none;
+    }
+
+    .event-content .btn-event-coupon {
+        position: absolute;
+        right: 5vw;
+        top: 0;
+        width: 19.444vw;
+        height: 38.889vw;
+        cursor: pointer;
+        opacity: 0;
+        border: none;
+        font-size: 0;
+    }
+    .event-content .btn-event {
+        position: absolute;
+        left: 4.722vw;
+        right: 4.722vw;
+        top: 0;
+        height: 14.444vw;
+        cursor: pointer;
+        opacity: 0;
+        border: none;
+        font-size: 0;
+        z-index: 2;
+        width: auto;
+    }
+    .event-content .evt-scroll {
+        position: absolute;
+        top: 0;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0 5vw;
+        scroll-snap-type: x mandatory;
+        white-space: nowrap;
+        font-size: 0;
+    }
+
+    .event-content .evt-scroll::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera*/
+    }
+    .event-content .evt-scroll li {
+        display: inline-block;
+        scroll-snap-align: start;
+        scroll-margin: 5vw;
+        scroll-snap-stop: always;
+        width: 43.611vw;
+        list-style: none;
+        font-size: 0;
+    }
+    .event-content .evt-scroll li + li {
+        margin-left: 1.667vw;
+    }
+
+    .event-item-04 .evt-scroll:nth-child(2) { top: 119.722vw; }
+    .event-item-04 .evt-scroll:nth-child(3) { top: 180vw; }
+    .event-item-04 .evt-scroll:nth-child(4) { top: 240.2778vw; }
+
+    .event-item-11 .evt-scroll:nth-child(2) { top: 106.033vw; }
+    .event-item-11 .evt-scroll:nth-child(2) li {
+        scroll-snap-align: center;
+        width: 44.444vw;
+    }
+
+    /* 팝업 */
+    .event-content .evt-scroll li .btn-popup {
+        width: 100%;
+        display: block;
+        padding: 0;
+        background: none;
+        appearance: none;
+        border: none;
+    }
+
+    .event-popup {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        max-height: 100%;
+        z-index: 10;
+        margin-top: calc(env(safe-area-inset-top));
+        opacity: 0;
+        pointer-events: none;
+        overflow: auto;
+        box-sizing: border-box;
+        overscroll-behavior: none;
+    }
+
+    .event-popup .event-popup-container {
+        position: relative;
+        bottom: 0;
+        left: 0;
+        max-height: calc(100vh - env(safe-area-inset-top));
+        box-sizing: border-box;
+        background-color: #fff;
+    }
+    html:has(.event-content input:checked),
+    body:has(.event-content input:checked),
+    .event-content:has(:checked) {
+        pointer-events: none;
+        overflow: hidden;
+    }
+
+    /* 팝업 열렸을 때 */
+    .event-popup:has(:checked) {
+        pointer-events: auto;
+        opacity: 1;
+    }
+
+    .event-popup-wrap:has(:checked) {
+        display: block;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 10;
+    }
+
+    .event-popup input[type='checkbox'] {
+        position: absolute;
+        top: 0;
+        left: -999px;
+    }
+
+    .event-popup .event-popup-container .event-popup-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        height: 15.556vw;
+        background: #fff;
+    }
+
+    .event-popup .event-popup-container .event-popup-header .btn-close {
+        position: absolute;
+        top: 5vw;
+        right: 5vw;
+        display: inline-block;
+        width: 8.889vw;
+        height: 8.889vw;
+        border: none;
+        opacity: 1;
+        vertical-align: top;
+    }
+
+    .event-popup .event-popup-container .event-popup-content {
+        overflow: scroll;
+        overscroll-behavior: none;
+        height: calc(100% - 15.556vw - env(safe-area-inset-top));
+        background: #fff;
+    }
+    .event-popup .event-popup-container .event-popup-content .popup-content-item {
+        padding: 2.5vw 5.556vw 8.333vw;
+    }
+
+    .store-wrap {
+        position: relative;
+        width: 100%;
+    }
+
+    .store-wrap .store-list {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.111vw;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        opacity: 0;
+        list-style: none;
+    }
+
+    .store-wrap .store-list .btn-store {
+        width: 100%;
+        height: 13.611vw;
+        box-sizing: border-box;
+    }
+</style>
+
+<div class="event-content">
+  <div class="event-item-01">
+    <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/new_year_beauty_fair_part2_bg_01.webp" alt="">
+  </div>
+  <div class="event-item-02">
+    <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/new_year_beauty_fair_bg_02.webp" alt="">
+  </div>
+  <div class="event-item-03">
+    <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/new_year_beauty_fair_bg_03.webp" alt="">
+    <button class="btn-event" type="button"
+            data-replace-prd-onclick="$$unifiedMoveTo({ screenId: 'EVT2002', screenDetail: 'path[]=7219332192850228787' })"
+            data-replace-dev-onclick="$$unifiedMoveTo({ screenId: 'EVT2002', screenDetail: 'path[]=' })">나만의 새해 뷰티 루틴 자세히 보러가기</button>
+  </div>
+  <div class="event-item-05-01">
+    <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/new_year_beauty_fair_part2_bg_05_01.webp" alt="">
+  </div>
+  <div class="event-item-05-02">
+    <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/new_year_beauty_fair_part2_bg_05_02.webp" alt="">
+    <!-- MAKE UP -->
+    <ul class="evt-scroll">
+      <li><label for="popup01" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/makeup_01.webp" alt="프라다 뷰티"></label></li>
+      <li><label for="popup02" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/makeup_02.webp" alt="아르마니 뷰티"></label></li>
+      <li><label for="popup03" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/makeup_03.webp" alt="나스"></label></li>
+      <li><label for="popup04" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/makeup_04.webp" alt="에스티로더"></label></li>
+      <li><label for="popup05" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/makeup_05.webp" alt="메이크업포에버"></label></li>
+      <li><label for="popup06" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/makeup_06.webp" alt="구찌 뷰티"></label></li>
+      <li><label for="popup07" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/makeup_07.webp" alt="맥"></label></li>
+      <li><label for="popup08" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/makeup_08.webp" alt="바비브라운"></label></li>
+      <li><label for="popup09" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/makeup_09.webp" alt="톰포드 뷰티"></label></li>
+      <li><label for="popup10" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/makeup_10.webp" alt="지방시 뷰티"></label></li>
+      <li><label for="popup11" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/makeup_11.webp" alt="겔랑"></label></li>
+      <li><label for="popup12" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/makeup_12.webp" alt="로라메르시에"></label></li>
+    </ul>
+    <div class="event-popup-wrap">
+      <!-- 팝업1. 프라다 뷰티 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup01" />
+          <div class="event-popup-header">
+            <label for="popup01" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_01_header.webp" alt="프라다 뷰티 방문 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_01_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020003831' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9011000102' });">본점</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업1. 프라다 뷰티 -->
+      <!-- 팝업2. 아르마니 뷰티 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup02" />
+          <div class="event-popup-header">
+            <label for="popup02" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_02_header.webp" alt="아르마니 뷰티 방문 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_02_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000831' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9130000062' });">대구점</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업2. 아르마니 뷰티 -->
+      <!-- 팝업3. 나스 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup03" />
+          <div class="event-popup-header">
+            <label for="popup03" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_03_header.webp" alt="나스 방문 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_03_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000106' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9130000070' });">대구신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9600000481' });">대전신세계 Art&Science</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080000334' });">센텀시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9120000391' });">스타필드 하남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070000189' });">신세계 사우스시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9100001430' });">의정부점</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업3. 나스 -->
+      <!-- 팝업4. 에스티로더 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup04" />
+          <div class="event-popup-header">
+            <label for="popup04" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_04_header.webp" alt="에스티로더 방문 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_04_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000726' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9060000224' });">광주신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9110000245' });">김해점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9130000057' });">대구신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9600000431' });">대전신세계 Art&Science</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9050000047' });">마산점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9010000096' });">본점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080000310' });">센텀시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9120000413' });">스타필드 하남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070000172' });">신세계 사우스시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9100000130' });">의정부점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9090000319' });">천안아산점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9030000174' });">타임스퀘어점</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업4. 에스티로더 -->
+      <!-- 팝업5. 메이크업포에버 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup05" />
+          <div class="event-popup-header">
+            <label for="popup05" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_05_header.webp" alt="메이크업포에버 방문예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_05_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000341' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9110000266' });">김해점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9600000454' });">대전신세계 Art&Science</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080000339' });">센텀시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9120000323' });">스타필드 하남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9100000086' });">의정부점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9090000166' });">천안아산점</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업5. 메이크업포에버 -->
+      <!-- 팝업6. 구찌 뷰티 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup06" />
+          <div class="event-popup-header">
+            <label for="popup06" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_06_header.webp" alt="구찌 뷰티 방문예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_06_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020003034' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9130002051' });">대구신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9600000477' });">대전신세계 Art&Science</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070001640' });">신세계 사우스시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9030001422' });">타임스퀘어</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업6. 구찌 뷰티 -->
+      <!-- 팝업7. 맥 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup07" />
+          <div class="event-popup-header">
+            <label for="popup07" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_07_header.webp" alt="맥 방문예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_07_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000332' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9060000227' });">광주신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9110000246' });">김해점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9130000059' });">대구신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9600000429' });">대전신세계 Art&Science</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9010000113' });">본점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080000337' });">센텀시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9120000399' });">스타필드 하남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070000168' });">신세계 사우스시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9100000085' });">의정부점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9090000163' });">천안아산점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9030000189' });">타임스퀘어점</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업7. 맥 -->
+      <!-- 팝업8. 바비브라운 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup08" />
+          <div class="event-popup-header">
+            <label for="popup08" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_08_header.webp" alt="바비브라운 방문예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_08_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000397' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9060000232' });">광주신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9130000058' });">대구신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9010000119' });">본점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080000336' });">센텀시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9120000400' });">스타필드 하남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070000159' });">신세계 사우스시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9100000094' });">의정부점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9090000186' });">천안아산점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9030000162' });">타임스퀘어점</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업8. 바비브라운 -->
+      <!-- 팝업9. 톰포드 뷰티 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup09" />
+          <div class="event-popup-header">
+            <label for="popup09" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_09_header_new.webp" alt="톰포드 뷰티 방문예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_09_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000971' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9060001398' });">광주신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9600000435' });">대전신세계 Art&Science</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9081000233' });">센텀시티</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업9. 톰포드 뷰티 -->
+      <!-- 팝업10. 지방시 뷰티 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup10" />
+          <div class="event-popup-header">
+            <label for="popup10" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_10_header.webp" alt="지방시 뷰티 방문예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_10_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020002716' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9600000473' });">대전신세계 Art&Science</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업10. 지방시 뷰티 -->
+      <!-- 팝업11. 겔랑 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup11" />
+          <div class="event-popup-header">
+            <label for="popup11" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_11_header.webp" alt="겔랑 방문예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_11_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000072' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9600000472' });">대전신세계 Art&Science</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9120000318' });">스타필드 하남점</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업11. 겔랑 -->
+      <!-- 팝업12. 로라메르시에 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup12" />
+          <div class="event-popup-header">
+            <label for="popup12" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_12_header.webp" alt="로라메르시에 방문예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_12_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020003035' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9600000515' });">대전신세계 Art&Science</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업12. 로라메르시에 -->
+    </div>
+    <!-- // MAKE UP -->
+  </div>
+  <div class="event-item-05-03">
+    <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/new_year_beauty_fair_part2_bg_05_03.webp" alt="">
+    <!-- SKIN CARE -->
+    <ul class="evt-scroll">
+      <li><label for="popup13" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/skincare_01.webp" alt="에이피 뷰티"></label></li>
+      <li><label for="popup14" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/skincare_02.webp" alt="키엘"></label></li>
+      <li><label for="popup15" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/skincare_03.webp" alt="비오템"></label></li>
+      <li><label for="popup16" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/skincare_04.webp" alt="겔랑"></label></li>
+      <li><label for="popup17" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/skincare_05.webp" alt="라 메르"></label></li>
+      <li><label for="popup18" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/skincare_06.webp" alt="스위스퍼펙션"></label></li>
+      <li><label for="popup19" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/skincare_07.webp" alt="SK-II"></label></li>
+      <li><label for="popup20" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/skincare_08.webp" alt="클라랑스"></label></li>
+      <li><label for="popup21" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/skincare_09.webp" alt="랩 시리즈"></label></li>
+      <li><label for="popup22" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/skincare_10.webp" alt="크리니크"></label></li>
+      <li><label for="popup23" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/skincare_11.webp" alt="라부르켓"></label></li>
+    </ul>
+    <div class="event-popup-wrap">
+      <!-- 팝업13. 에이피 뷰티 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup13" />
+          <div class="event-popup-header">
+            <label for="popup13" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_13_header.webp" alt="에이피 뷰티 방문 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_13_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000665' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070000184' });">신세계 사우스시티</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업13. 에이피 뷰티 -->
+      <!-- 팝업14. 키엘 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup14" />
+          <div class="event-popup-header">
+            <label for="popup14" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_14_header.webp" alt="키엘 방문 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_14_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000934' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9060000215' });">광주신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9130000063' });">대구신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9600000445' });">대전신세계 Art&Science</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080000330' });">센텀시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070000187' });">신세계 사우스시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9100000149' });">의정부점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9030000586' });">타임스퀘어점</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업14. 키엘 -->
+      <!-- 팝업15. 비오템 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup15" />
+          <div class="event-popup-header">
+            <label for="popup15" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_15_header.webp" alt="비오템 방문 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_15_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000497' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9060000221' });">광주신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9130000065' });">대구신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9600000446' });">대전신세계 Art&Science</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080000326' });">센텀시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070000170' });">신세계 사우스시티</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업15. 비오템 -->
+      <!-- 팝업16. 겔랑 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup16" />
+          <div class="event-popup-header">
+            <label for="popup16" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_16_header.webp" alt="겔랑 방문 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_16_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070000166' });">신세계 사우스시티</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업16. 겔랑 -->
+      <!-- 팝업17. 라 메르 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup17" />
+          <div class="event-popup-header">
+            <label for="popup17" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_17_header.webp" alt="라 메르 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_17_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000193' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9060000231' });">광주신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9130000060' });">대구신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9600000434' });">대전신세계 Art&Science</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9010000092' });">본점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080000318' });">센텀시티</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업17. 라 메르 -->
+      <!-- 팝업18. 스위스퍼펙션 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup18" />
+          <div class="event-popup-header">
+            <label for="popup18" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_18_header.webp" alt="스위스퍼펙션 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_18_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020003036' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9130002052' });">대구신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9600000496' });">대전신세계 Art&Science</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9010002020' });">본점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080000325' });">센텀시티</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업18. 스위스퍼펙션 -->
+      <!-- 팝업19. SK-II -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup19" />
+          <div class="event-popup-header">
+            <label for="popup19" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_19_header.webp" alt="SK-II 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_19_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000050' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9060000217' });">광주신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9110000265' });">김해점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080000306' });">센텀시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070000176' });">신세계 사우스시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9030000180' });">타임스퀘어점</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업19. SK-II -->
+      <!-- 팝업20. 클라랑스 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup20" />
+          <div class="event-popup-header">
+            <label for="popup20" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_20_header.webp" alt="클라랑스 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_20_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000926' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9110000256' });">김해점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9130000066' });">대구신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9600000484' });">대전신세계 Art&Science</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9050000048' });">마산점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080000328' });">센텀시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9120000417' });">스타필드 하남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070000162' });">신세계 사우스시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9090000395' });">천안아산점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9030000183' });">타임스퀘어점</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업20. 클라랑스 -->
+      <!-- 팝업21. 랩 리시즈 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup21" />
+          <div class="event-popup-header">
+            <label for="popup21" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_21_header.webp" alt="랩 리시즈 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_21_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000225' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070000163' });">신세계 사우스시티</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업21. 랩 리시즈 -->
+      <!-- 팝업22. 크리니크 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup22" />
+          <div class="event-popup-header">
+            <label for="popup22" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_22_header.webp" alt="크리니크 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_22_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000920' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070000175' });">신세계 사우스시티</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업22. 크리니크 -->
+      <!-- 팝업23. 라부르켓 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup23" />
+          <div class="event-popup-header">
+            <label for="popup23" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_23_header.webp" alt="라부르켓 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_23_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080002836' });">센텀시티</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업23. 크리니크 -->
+    </div>
+    <!--// SKIN CARE -->
+  </div>
+  <div class="event-item-05-04">
+    <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/new_year_beauty_fair_part2_bg_05_04.webp" alt="">
+    <!-- HAIR & HAND CARE -->
+    <ul class="evt-scroll">
+      <li><label for="popup24" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/bodycare_01.webp" alt="록시땅"></label></li>
+      <li><label for="popup25" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/bodycare_02.webp" alt="아베다"></label></li>
+      <li><label for="popup26" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/bodycare_03.webp" alt="다비네스/오리베"></label></li>
+      <li><label for="popup27" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/bodycare_04.webp" alt="시세이도"></label></li>
+    </ul>
+    <div class="event-popup-wrap">
+      <!-- 팝업24. 록시땅 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup24" />
+          <div class="event-popup-header">
+            <label for="popup24" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_24_header.webp" alt="아베다 방문 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_24_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000269' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9110000252' });">김해점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9600001250' });">대전신세계 Art&Science</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9050000941' });">마산점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080000329' });">센텀시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070000178' });">신세계 사우스시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9100000079' });">의정부점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9090000132' });">천안아산점</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업24. 록시땅 -->
+      <!-- 팝업25. 아베다 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup25" />
+          <div class="event-popup-header">
+            <label for="popup25" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_25_header.webp" alt="아베다 방문 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_25_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9060000236' });">광주신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9110000247' });">김해점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9130002197' });">대구신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9010000118' });">본점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080000311' });">센텀시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070000188' });">신세계 사우스시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9100000125' });">의정부점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9090000292' });">천안아산점</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업25. 아베다 -->
+      <!-- 팝업26. 다비네스/오리베 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup26" />
+          <div class="event-popup-header">
+            <label for="popup26" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_26_header.webp" alt="다비네스/오리베 방문 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_26_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020003904' });">강남점</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업26. 다비네스/오리베 -->
+      <!-- 팝업27. 시세이도 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup27" />
+          <div class="event-popup-header">
+            <label for="popup27" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_27_header.webp" alt="시세이도 방문 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_27_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9020000626' });">강남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9060000228' });">광주신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9130000071' });">대구신세계</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9050000050' });">마산점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080000324' });">센텀시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9120000410' });">스타필드 하남점</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9070000180' });">신세계 사우스시티</button></li>
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9090000272' });">천안아산점</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업27. 시세이도 -->
+    </div>
+    <!-- // HAIR & HAND CARE -->
+  </div>
+  <div class="event-item-05-04">
+    <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/new_year_beauty_fair_part2_bg_05_05.webp" alt="">
+    <!-- HAIR & HAND CARE -->
+    <ul class="evt-scroll">
+      <li><label for="popup28" class="btn-popup"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/perfume_01.webp" alt="아르마니 뷰티"></label></li>
+    </ul>
+    <div class="event-popup-wrap">
+      <!-- 팝업28. 아르마니 뷰티 -->
+      <div class="event-popup">
+        <div class="event-popup-container">
+          <input type="checkbox" id="popup28" />
+          <div class="event-popup-header">
+            <label for="popup28" class="btn-close">
+              <img src="https://appdept.shinsegae.com/contents/event/2025_common_assets/popup_close_btn.webp" alt="팝업 닫기">
+            </label>
+          </div>
+          <div class="event-popup-content">
+            <div class="popup-content-item">
+              <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_28_header.webp" alt="아르마니 뷰티 방문 예약">
+              <div class="store-wrap">
+                <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/popup_28_cont.webp" alt="">
+                <ul class="store-list">
+                  <li class="store-item"><button type="button" class="btn-store" onclick="$$unifiedMoveTo({ screenId: 'REDIRECT', screenDetail: '/smart-order/shop/9080000335' });">센텀시티</button></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- // 팝업28. 아르마니 뷰티 -->
+    </div>
+    <!-- // HAIR & HAND CARE -->
+  </div>
+  <div class="event-item-06">
+    <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/new_year_beauty_fair_part2_bg_06.webp" alt="">
+  </div>
+  <div class="event-item-07">
+    <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/new_year_beauty_fair_part2_bg_07.webp" alt="">
+    <button type="button" class="btn-event-coupon"
+            data-replace-prd-onclick="$$unifiedDownloadRewardCoupon({ couponIdList: ['202601780779'] }, { devicePush: [] });"
+            data-replace-dev-onclick="$$unifiedDownloadRewardCoupon({ couponIdList: ['202601721371'] }, { devicePush: [] });">코스메틱 단일 브랜드 5천원 할인</button>
+  </div>
+  <div class="event-item-08">
+    <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/new_year_beauty_fair_part2_bg_08.webp" alt="">
+    <button type="button" class="btn-event" onclick="$$unifiedMoveTo({ screenId: 'MYP0005' })">쿠폰함 가기</button>
+  </div>
+  <div class="event-item-11">
+    <img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/new_year_beauty_fair_bg_11.webp" alt="">
+    <ul class="evt-scroll">
+      <li><button type="button" onclick="$$unifiedMoveTo({ screenId: 'ESP0010', screenDetail: 'https://m-eshop.ssg.com/plan/planShop.ssg?dispCmptId=6000485380' });"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/online_shopping_01.webp" alt="프라다 뷰티 보러가기"></button></li>
+      <li><button type="button" onclick="$$unifiedMoveTo({ screenId: 'ESP0010', screenDetail: 'https://m-eshop.ssg.com/plan/planShop.ssg?dispCmptId=6000245781' });"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/online_shopping_02.webp" alt="에스티 로더 보러가기"></button></li>
+      <li><button type="button" onclick="$$unifiedMoveTo({ screenId: 'ESP0010', screenDetail: 'https://m-eshop.ssg.com/plan/planShop.ssg?dispCmptId=6000250480' });"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/online_shopping_03.webp" alt="키엘 보러가기"></button></li>
+      <li><button type="button" onclick="$$unifiedMoveTo({ screenId: 'ESP0010', screenDetail: 'https://m-eshop.ssg.com/plan/planShop.ssg?dispCmptId=6000245769' });"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/online_shopping_04.webp" alt="맥 보러가기"></button></li>
+      <li><button type="button" onclick="$$unifiedMoveTo({ screenId: 'ESP0010', screenDetail: 'https://m-eshop.ssg.com/plan/planShop.ssg?dispCmptId=6000246998' });"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/online_shopping_05.webp" alt="록시땅 보러가기"></button></li>
+      <li><button type="button" onclick="$$unifiedMoveTo({ screenId: 'ESP0010', screenDetail: 'https://m-eshop.ssg.com/plan/planShop.ssg?dispCmptId=6000248581' });"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/online_shopping_06.webp" alt="바비브라운 보러가기"></button></li>
+      <li><button type="button" onclick="$$unifiedMoveTo({ screenId: 'ESP0010', screenDetail: 'https://m-eshop.ssg.com/plan/planShop.ssg?dispCmptId=4010152487' });"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/online_shopping_07.webp" alt="아베다 보러가기"></button></li>
+      <li><button type="button" onclick="$$unifiedMoveTo({ screenId: 'ESP0010', screenDetail: 'https://m-eshop.ssg.com/plan/planShop.ssg?dispCmptId=6000246788' });"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/online_shopping_08.webp" alt="라 메르 보러가기"></button></li>
+      <li><button type="button" onclick="$$unifiedMoveTo({ screenId: 'ESP0010', screenDetail: 'https://m-eshop.ssg.com/plan/planShop.ssg?dispCmptId=6000251215' });"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/online_shopping_09.webp" alt="톰포드 뷰티 보러가기"></button></li>
+      <li><button type="button" onclick="$$unifiedMoveTo({ screenId: 'ESP0010', screenDetail: 'https://m-eshop.ssg.com/plan/planShop.ssg?dispCmptId=6000247707' });"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/online_shopping_10.webp" alt="랩시리즈 보러가기"></button></li>
+      <li><button type="button" onclick="$$unifiedMoveTo({ screenId: 'ESP0010', screenDetail: 'https://m-eshop.ssg.com/plan/planShop.ssg?dispCmptId=6000248537' });"><img src="https://appdept.shinsegae.com/contents/event/260102_new_year_beauty_fair/online_shopping_11.webp" alt="크리니크 보러가기"></button></li>
+    </ul>
+  </div>
+</div>

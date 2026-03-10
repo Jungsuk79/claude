@@ -1,0 +1,81 @@
+@use 'sass:meta';
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('/resources/site/fonts/fonts.css');
+
+#WRAP:has(#scatalog_2512) {
+  overflow: unset;
+
+  .container {
+    margin-top: 0;
+    padding-top: 60px;
+  }
+
+  &:has(.catalog_search_wrap) {
+    #GNB .top {
+      border-bottom-color: transparent;
+    }
+  }
+}
+
+#scatalog_2512.ch_2024 {
+
+  .catalog_search_wrap {
+    min-height: calc(100vh - 440px);
+
+    .search_form_wrap {
+      padding-bottom: 40px;
+    }
+
+    .btn_box_md {
+      .btn_black {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1;
+      }
+    }
+
+    .catalog_result_wrap {
+      .product_num {
+        padding-top: 0 !important;
+      }
+
+      .search_result_desc {
+        padding-bottom: 40px;
+        font-family: 'Pretendard', sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.4;
+        letter-spacing: -0.015em;
+        text-align: center;
+        color: #000;
+      }
+    }
+
+    .swiper_prod_wrap {
+      overflow: hidden;
+      margin: 0 -18px;
+      padding: 0 18px;
+    }
+  }
+
+  .no_data_box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0 0 40px;
+
+    .no_data_desc {
+      padding: 60px 0;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 22px;
+      letter-spacing: -0.015em;
+      color: #000;
+      text-align: center;
+      font-family:  'Pretendard', sans-serif ;
+    }
+  }
+}

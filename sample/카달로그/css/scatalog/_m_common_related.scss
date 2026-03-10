@@ -1,0 +1,25 @@
+@use 'sass:meta';
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap");
+@import url('/resources/site/fonts/fonts.css');
+
+#WRAP:has(#scatalog_2512) {
+  overflow: unset;
+
+  .container {
+    margin-top: 0;
+    padding-top: 60px;
+  }
+
+  &:has(.catalog_related_wrap) {
+    #GNB .top {
+      border-bottom-color: transparent;
+    }
+  }
+}
+
+#scatalog_2512.ch_2024 {
+  .catalog_related_wrap {
+    min-height: calc(100vh - 440px);
+  }
+}
